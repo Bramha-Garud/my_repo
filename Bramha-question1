@@ -1,0 +1,32 @@
+Q1. What is cherry-pick? Explain the use case of it and also write steps to do it.
+
+Ans. ### **Git Cherry-Pick**  
+`git cherry-pick` is a command used to apply a specific commit from one branch to another without merging all changes. It is useful when you need to transfer a bug fix or a particular feature without pulling unwanted commits.  
+
+### **Use Case**  
+Suppose a critical bug fix is committed in a feature branch, but the main branch needs it immediately. Instead of merging the entire branch, `git cherry-pick` allows applying only that specific commit.  
+
+### **Steps to Use Cherry-Pick**  
+1. **Switch to the target branch:**  
+   ```sh
+   git checkout main
+   ```  
+2. **Find the commit hash:**  
+   ```sh
+   git log --oneline
+   ```  
+3. **Cherry-pick the commit:**  
+   ```sh
+   git cherry-pick <commit-hash>
+   ```  
+4. **Resolve conflicts (if any):**  
+   ```sh
+   git add .
+   git cherry-pick --continue
+   ```  
+5. **Push the changes:**  
+   ```sh
+   git push origin main
+   ```  
+
+This ensures that only the necessary changes are applied without affecting other commits. 🚀
