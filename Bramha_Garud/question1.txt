@@ -1,0 +1,75 @@
+Q1. What is cherry-pick? Explain the use case of it and also write steps to do it.
+
+Answer.
+
+### **What is Cherry-Pick?**
+Cherry-picking in Git is the process of selecting a specific commit from one branch and applying it to another branch. Unlike merging or rebasing, which bring multiple commits together, cherry-picking allows you to apply only a particular commit.
+
+### **Use Case of Cherry-Pick**
+- **Bug Fix Backporting**: If a bug is fixed in a feature branch and you need the same fix in the `main` or `develop` branch, you can cherry-pick the commit without merging the entire feature branch.
+- **Selective Feature Implementation**: If a feature branch contains multiple commits but only one commit is needed on another branch, cherry-picking helps pick that specific commit.
+- **Undoing a Reverted Commit**: If a commit was reverted but needs to be reintroduced, cherry-picking can bring it back.
+
+---
+
+### **Steps to Perform Cherry-Pick in Git**
+
+#### **1. Check the Commit History**
+Before cherry-picking, find the commit hash (SHA) that you want to apply.
+```bash
+git log --oneline
+```
+Example output:
+```
+a1b2c3d Fix issue with login form
+e4f5g6h Add new payment gateway
+i7j8k9l Update README file
+```
+
+#### **2. Switch to the Target Branch**
+Ensure you are on the branch where you want to apply the commit.
+```bash
+git checkout <target-branch>
+```
+Example:
+```bash
+git checkout main
+```
+
+#### **3. Perform the Cherry-Pick**
+Use the commit hash to cherry-pick it to your current branch.
+```bash
+git cherry-pick <commit-hash>
+```
+Example:
+```bash
+git cherry-pick a1b2c3d
+```
+
+#### **4. Resolve Conflicts (If Any)**
+If the cherry-pick causes conflicts, Git will pause the operation. You need to resolve the conflicts manually and then proceed.
+
+- After resolving conflicts, use:
+  ```bash
+  git add .
+  git cherry-pick --continue
+  ```
+- To abort the cherry-pick:
+  ```bash
+  git cherry-pick --abort
+  ```
+
+#### **5. Push the Changes**
+Once the commit is successfully applied, push it to the remote repository.
+```bash
+git push origin <target-branch>
+```
+Example:
+```bash
+git push origin main
+```
+
+---
+
+### **Conclusion**
+Cherry-picking is a powerful tool in Git that allows developers to selectively apply changes without merging an entire branch. It is especially useful for bug fixes, selective feature implementation, and undoing changes efficiently.

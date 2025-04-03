@@ -1,0 +1,62 @@
+Q6. How to un-stage changes from the staged area. write command for it.
+
+Answer.
+
+### **How to Unstage Changes from the Staged Area in Git**  
+
+If you have added files to the staging area using `git add` but want to remove them before committing, you can **unstage** them without losing the changes.
+
+---
+
+### **1️⃣ Unstage a Specific File**
+To remove a file from the staging area while keeping its changes in the working directory:  
+```bash
+git reset <file-name>
+```
+**Example:**
+```bash
+git reset file.txt
+```
+✅ The file is now unstaged but retains its modifications.
+
+---
+
+### **2️⃣ Unstage All Files**
+To unstage **all staged files** at once:
+```bash
+git reset
+```
+✅ This removes all files from the staging area while keeping changes.
+
+---
+
+### **3️⃣ Unstage a File and Revert Changes**
+If you also want to **discard** all changes (not just unstage):
+```bash
+git checkout -- <file-name>
+```
+or
+```bash
+git restore <file-name>
+```
+✅ This will **reset the file to its last committed state**.
+
+---
+
+### **4️⃣ Unstage All Files and Discard Changes**
+```bash
+git reset --hard
+```
+✅ This **removes all staged and unstaged changes**, bringing the repository back to the last commit.
+
+---
+
+### **Conclusion**
+| Command | Purpose |
+|---------|---------|
+| `git reset <file>` | Unstages a specific file but keeps changes |
+| `git reset` | Unstages all files but keeps changes |
+| `git restore <file>` | Discards changes in a specific file |
+| `git reset --hard` | Removes all changes permanently |
+
+👉 **Use `git reset` to safely unstage files without losing work!** 🚀

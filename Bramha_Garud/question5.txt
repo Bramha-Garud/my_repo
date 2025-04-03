@@ -1,0 +1,68 @@
+Q5. Difference between --force push and --force-with-lease, You have to show the use of both, also you have to show in what scenario --force-with-lease is used.
+
+Answer.
+
+### **Difference Between `--force` Push and `--force-with-lease` in Git**  
+
+Both `--force` and `--force-with-lease` are used to **overwrite remote changes**, but they behave differently.  
+
+| Option                | Behavior |
+|----------------------|------------------------------------------------|
+| `git push --force` | **Forces the push**, overwriting everything on the remote repository without checking if someone else has pushed changes. **Risky** if others are working on the same branch. |
+| `git push --force-with-lease` | **Prevents overwriting others' changes**. It **checks** if the remote branch has been modified before forcing a push. **Safer** when working in a team. |
+
+---
+
+## **1️⃣ Using `--force` (Risky Overwrite)**
+### **Scenario:** A developer rewrites history locally and force-pushes changes, overwriting remote commits.
+
+### **Steps:**
+#### **Step 1: Create a Repository and Make Initial Commits**
+```bash
+git init force-demo
+cd force-demo
+echo "Initial commit" > file.txt
+git add .
+git commit -m "Initial commit"
+git remote add origin <your-repo-url>
+git push origin main
+```
+
+#### **Step 2: Modify the Last Commit Locally**
+```bash
+echo "Modified commit" > file.txt
+git add .
+git commit --amend -m "Modified commit"
+git push origin main --force
+```
+💀 **This overwrites the remote branch completely, even if others have made changes.**
+
+---
+
+## **2️⃣ Using `--force-with-lease` (Safe Overwrite)**
+### **Scenario:** Prevents overwriting changes made by other developers.
+
+### **Steps:**
+#### **Step 1: Another Developer Pushes a Change**
+Imagine another team member makes a change and pushes it:
+```bash
+echo "Collaborator's change" > file.txt
+git add .
+git commit -m "Collaborator's change"
+git push origin main
+```
+
+#### **Step 2: You Try to Force-Push Your Change**
+Now, if you try:
+```bash
+git push origin main --force-with-lease
+```
+💡 **Git will reject the push** because it detects that the remote branch has changed. This prevents accidental overwrites.
+
+---
+
+### **🚀 When to Use Each?**
+- ✅ **Use `--force` only if you are 100% sure no one else has made changes** (e.g., in a personal project).
+- ✅ **Use `--force-with-lease` when working in a team** to avoid overwriting others' commits by mistake.
+
+🔴 **Warning:** `--force` can lead to lost work. `--force-with-lease` is always safer!
