@@ -1,0 +1,72 @@
+Q4. How to delete one commit or multiple commits permanently Write a command for it. 
+
+Answer.
+
+### **How to Delete One or Multiple Commits Permanently in Git**  
+
+In Git, you can delete commits permanently using the **reset** or **revert** commands depending on whether you want to remove commits completely or undo their changes while keeping the history.
+
+---
+
+### **1. Delete the Last Commit (Most Recent Commit)**
+If you want to delete the last commit permanently:  
+```bash
+git reset --hard HEAD~1
+```
+- This moves the branch pointer back by **one commit**, removing the last commit.
+- **Warning**: This will **delete** the commit **permanently** and cannot be undone unless referenced elsewhere.
+
+If you want to remove the last commit but **keep the changes** in your working directory:
+```bash
+git reset --soft HEAD~1
+```
+
+---
+
+### **2. Delete a Specific Commit in History**
+If the commit is not the most recent one (e.g., deleting `C2` from `C1 → C2 → C3 → C4`):  
+```bash
+git rebase -i HEAD~4
+```
+- Find the commit you want to remove.
+- Change **pick** to **drop** or delete that line in the editor.
+- Save and close to apply the changes.
+
+---
+
+### **3. Delete Multiple Commits Permanently**
+To remove the last **N commits**, use:  
+```bash
+git reset --hard HEAD~N
+```
+Example:
+```bash
+git reset --hard HEAD~3
+```
+- This deletes the last **3 commits** permanently.
+
+---
+
+### **4. Force Push (If Commits Were Pushed)**
+If the commits were already pushed to a remote repository, you need to force push:  
+```bash
+git push origin <branch-name> --force
+```
+**Warning**: This will overwrite the history in the remote repository, so be careful when using it.
+
+---
+
+### **5. Alternative: Revert Instead of Delete**
+If you want to **keep the history** but undo the changes, use:
+```bash
+git revert <commit-hash>
+```
+This creates a new commit that undoes the changes from the specified commit instead of permanently deleting it.
+
+---
+
+### **Conclusion**
+- Use **`git reset --hard`** to permanently remove commits.
+- Use **`git rebase -i`** to delete specific commits from history.
+- Use **`git revert`** to undo changes without deleting history.
+- Always be cautious when using **`--force`** push. 🚀

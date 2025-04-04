@@ -1,0 +1,84 @@
+Q3. How to combine two commits into one commit? For Example, you have 4 different commits C1, C2, C3, and  C4, and you to combine C2 and C3 into one single commit. 
+
+Answer.
+
+### **How to Combine Two Commits into One Commit in Git (Squashing Commits)**  
+Git provides the **interactive rebase** feature to combine multiple commits into one. This process is called **squashing**.  
+
+---
+
+### **Steps to Combine C2 and C3 into a Single Commit**  
+
+#### **1. Check Your Commit History**
+First, list the last few commits to identify their order.
+```bash
+git log --oneline
+```
+Example output:
+```
+abcd123 C4
+efgh456 C3
+ijkl789 C2
+mnop012 C1
+```
+We want to **merge C2 and C3 into a single commit**.
+
+---
+
+#### **2. Start an Interactive Rebase**
+Since C2 and C3 are two commits below the latest, we need to rebase from C1 (3 commits back).
+```bash
+git rebase -i HEAD~3
+```
+
+---
+
+#### **3. Edit the Rebase List**
+Git opens an interactive editor showing the last 3 commits:
+```
+pick mnop012 C1
+pick ijkl789 C2
+pick efgh456 C3
+pick abcd123 C4
+```
+- Change **pick** to **squash (s)** for C3 (the commit to be combined with C2):
+```
+pick mnop012 C1
+pick ijkl789 C2
+squash efgh456 C3
+pick abcd123 C4
+```
+
+---
+
+#### **4. Modify the Commit Message**
+After saving the rebase changes, Git will prompt you to edit the commit message.  
+You'll see something like this:
+```
+# This is a combination of C2 and C3
+C2 commit message
+C3 commit message
+```
+- Modify the message as needed, then save and close the editor.
+
+---
+
+#### **5. Complete the Rebase**
+Git will apply the changes. If conflicts occur, resolve them manually and continue:
+```bash
+git add .
+git rebase --continue
+```
+
+---
+
+#### **6. Push Changes (If Needed)**
+Since the commit history is rewritten, **force push** is required if you already pushed:
+```bash
+git push origin main --force
+```
+
+---
+
+### **Conclusion**
+By using interactive rebase, we successfully combined **C2 and C3** into a single commit, keeping the Git history clean and structured.

@@ -1,0 +1,69 @@
+Q2. How to set multiple remote repositories for the same project? Explain the use case. you should have a working demo of it.
+
+Answer.
+
+### **Setting Multiple Remote Repositories for the Same Project in Git**  
+Git allows you to set multiple remote repositories for the same project. This is useful when you want to push or fetch from different sources, such as GitHub, GitLab, or Bitbucket, for collaboration or backup purposes.
+
+---
+
+### **Use Case of Multiple Remotes**
+1. **Backup Repository:** Keep a backup of your GitHub repository on GitLab or Bitbucket.
+2. **Multiple Remotes for Collaboration:** If you work with multiple teams using different repositories, you can push changes to both.
+3. **Forked Repository Contribution:** If you've forked a repository and made changes, you can keep both the original repo and your fork as remotes.
+
+---
+
+### **Working Demo: Adding Multiple Remotes**
+
+#### **1. Initialize a Git Repository (If Not Already)**
+```bash
+git init
+```
+
+#### **2. Add the First Remote Repository (GitHub)**
+```bash
+git remote add origin https://github.com/user/repo.git
+```
+
+#### **3. Add the Second Remote Repository (GitLab)**
+```bash
+git remote add backup https://gitlab.com/user/repo.git
+```
+
+#### **4. Verify the Added Remotes**
+```bash
+git remote -v
+```
+**Output:**
+```
+origin  https://github.com/user/repo.git (fetch)
+origin  https://github.com/user/repo.git (push)
+backup  https://gitlab.com/user/repo.git (fetch)
+backup  https://gitlab.com/user/repo.git (push)
+```
+
+#### **5. Push to Both Repositories**
+- Push to GitHub:
+  ```bash
+  git push origin main
+  ```
+- Push to GitLab:
+  ```bash
+  git push backup main
+  ```
+
+#### **6. Set Up a Single Command to Push to Both Remotes**
+Modify the Git configuration:
+```bash
+git remote set-url --add --push origin https://gitlab.com/user/repo.git
+```
+Now, pushing to `origin` will push to both repositories:
+```bash
+git push origin main
+```
+
+---
+
+### **Conclusion**
+By setting up multiple remotes, you can work with different repositories efficiently, ensuring redundancy and smooth collaboration with multiple teams or platforms.
